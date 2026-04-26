@@ -1,0 +1,437 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hao-yu & Joy | Wedding Invitation</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+TC:wght@200;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sun: '#d4a373',
+                        sage: '#8da399',
+                        cream: '#fdfbf7'
+                    },
+                    fontFamily: {
+                        serif: ['Noto Serif TC', 'serif'],
+                        english: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Serif TC', serif; color: #444; background-color: #fdfbf7; scroll-behavior: smooth; }
+        
+        /* 導覽列：毛玻璃 */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 封面背景與文字框架控制 */
+        .hero-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.25)), url('http://i.postimg.cc/V6rdxj0N/w-124.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 90%; /* 確保不超出螢幕 */
+            text-align: center;
+            color: white;
+        }
+
+        /* 計時器卡片：白色微光 */
+        .timer-card {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 12px 30px rgba(212, 163, 115, 0.08), inset 0 0 15px rgba(255, 255, 255, 1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 14px;
+            padding: 1.6rem 0.5rem;
+            min-width: 80px;
+        }
+        .timer-line {
+            width: 1px;
+            height: 40px;
+            background-color: #d4a373;
+            opacity: 0.2;
+            margin: 0 12px;
+        }
+
+        /* V-Card 與 寬度限制 */
+        .v-card {
+            border-left: 3px solid #d4a373;
+            background: white;
+            box-shadow: 6px 6px 20px rgba(0,0,0,0.02);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            max-width: 100%; /* 防止溢出 */
+        }
+
+        /* 手機版關鍵字不換行 */
+        .no-wrap {
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        /* 摺疊面板 */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .accordion-active .accordion-content {
+            max-height: 800px;
+        }
+
+        /* 表單標籤雙語設計 */
+        label.bilingual {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: #9da3a0;
+            margin-bottom: 4px;
+        }
+        label.bilingual span.eng {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+        }
+        .form-input {
+            width: 100%;
+            border-bottom: 1px solid #f2f2f2;
+            padding: 0.8rem 0;
+            background: transparent;
+            outline: none;
+            transition: border-color 0.4s;
+            border-radius: 0;
+        }
+        .form-input:focus { border-color: #d4a373; }
+
+        .fade-in { animation: fadeIn 2.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- 導航列 -->
+    <nav class="glass-nav fixed top-0 w-full z-50 px-8 py-4 flex justify-between items-center">
+        <div class="font-english text-xl tracking-[0.2em] text-sun font-semibold">H & J</div>
+        <div class="hidden md:flex space-x-10 text-[10px] tracking-[0.3em] font-light uppercase">
+            <a href="#about" class="hover:text-sun transition">About</a>
+            <a href="#details" class="hover:text-sun transition">Details</a>
+            <a href="#rsvp" class="hover:text-sun transition">RSVP</a>
+        </div>
+        <div class="md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4a373" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </div>
+    </nav>
+
+    <!-- 封面 Hero：突顯人物，縮小文案並限制寬度 -->
+    <header class="hero-container">
+        <div class="hero-bg"></div>
+        <div class="hero-content fade-in px-6">
+            <p class="font-serif text-[11px] md:text-[13px] mb-8 tracking-[0.3em] opacity-80 font-light leading-relaxed max-w-sm mx-auto">
+                如果人生是一座巨大的遊樂場，<br class="md:hidden">我只想成為你最後坐上的那張長椅。
+            </p>
+            <h1 class="font-english text-5xl md:text-8xl font-light mb-10 tracking-tight">Hao-yu & Joy</h1>
+            <div class="h-[1px] w-10 bg-white/30 mx-auto mb-10"></div>
+            <p class="text-sm md:text-base font-light tracking-[0.6em] mb-4">2026 . 11 . 22</p>
+            <p class="text-[8px] font-english tracking-[0.4em] opacity-40 uppercase">Wedding Invitation</p>
+        </div>
+    </header>
+
+    <!-- 計時器與關於我們 -->
+    <section id="about" class="py-24 px-6 max-w-4xl mx-auto text-center">
+        <div class="mb-20">
+            <span class="text-sun font-english tracking-[0.5em] text-[10px] uppercase mb-5 block">Counting Down</span>
+            <h3 class="text-2xl font-serif mb-12 tracking-widest">見證時刻倒數</h3>
+            
+            <div id="countdown" class="flex flex-wrap justify-center items-center gap-3 sm:gap-0">
+                <div class="timer-card">
+                    <div id="days" class="text-3xl font-english text-sun">00</div>
+                    <div class="text-[9px] text-gray-400 tracking-[0.1em] uppercase mt-2">Days</div>
+                </div>
+                <div class="timer-line hidden sm:block"></div>
+                <div class="timer-card">
+                    <div id="hours" class="text-3xl font-english text-sun">00</div>
+                    <div class="text-[9px] text-gray-400 tracking-[0.1em] uppercase mt-2">Hours</div>
+                </div>
+                <div class="timer-line hidden sm:block"></div>
+                <div class="timer-card">
+                    <div id="minutes" class="text-3xl font-english text-sun">00</div>
+                    <div class="text-[9px] text-gray-400 tracking-[0.1em] uppercase mt-2">Mins</div>
+                </div>
+                <div class="timer-line hidden sm:block"></div>
+                <div class="timer-card">
+                    <div id="seconds" class="text-3xl font-english text-sun">00</div>
+                    <div class="text-[9px] text-gray-400 tracking-[0.1em] uppercase mt-2">Secs</div>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-xl mx-auto leading-loose text-gray-500 font-light px-4 space-y-4">
+            <p class="italic text-sun/80 mb-8 font-serif text-base">
+                「在喧囂的遊樂場裡奔跑了許久，<br>我們終於在彼此身邊停下腳步。」
+            </p>
+            <p class="text-[15px]">在那一天，我們決定不再追逐下一個設施的驚喜，</p>
+            <p class="text-[15px]">而是並肩坐下，將往後的日常風景，</p>
+            <p class="text-[15px]">都收納成最安靜、也最深長的浪漫。</p>
+        </div>
+    </section>
+
+    <!-- 婚禮詳情 -->
+    <section id="details" class="bg-sage/5 py-24 px-6">
+        <div class="max-w-lg mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-sage font-english tracking-[0.4em] text-[10px] uppercase block mb-4">Event Details</span>
+                <h3 class="text-2xl font-serif tracking-widest">婚宴行程</h3>
+            </div>
+
+            <div class="v-card rounded-r-xl">
+                <span class="font-english text-[9px] text-sun tracking-[0.3em] uppercase block mb-4">Schedule</span>
+                <div class="space-y-5">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-lg font-serif">10:30 證婚儀式</h4>
+                        <span class="text-gray-300 font-english text-[10px] uppercase">Ceremony</span>
+                    </div>
+                    <div class="h-[1px] w-full bg-gray-50"></div>
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-lg font-serif">11:30 婚禮午宴</h4>
+                        <span class="text-gray-300 font-english text-[10px] uppercase">Luncheon</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="v-card rounded-r-xl">
+                <span class="font-english text-[9px] text-sun tracking-[0.3em] uppercase block mb-4">Venue</span>
+                <h4 class="text-xl font-serif mb-1 no-wrap">臺中國家歌劇院 5樓 VVG餐廳</h4>
+                <p class="text-gray-400 text-sm font-light mb-5 no-wrap">臺中市西屯區惠來路二段101號5樓</p>
+                <a href="https://maps.app.goo.gl/P8u2H8C7B47XF6rF9" target="_blank" class="inline-flex items-center text-[9px] text-sun border-b border-sun/30 pb-1 tracking-[0.2em] uppercase font-medium">
+                    Google Maps
+                </a>
+            </div>
+
+            <div id="traffic-accordion" class="border border-sun/10 rounded-2xl overflow-hidden bg-white shadow-sm mb-10">
+                <button onclick="toggleAccordion()" class="w-full px-8 py-6 flex justify-between items-center text-[10px] tracking-[0.2em] text-gray-500 hover:bg-gray-50 transition outline-none">
+                    <span>交通指引 TRANSPORTATION</span>
+                    <svg id="acc-icon" class="w-4 h-4 transition-transform duration-500 text-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-8 pb-8 text-[13px] leading-relaxed text-gray-500 space-y-5 pt-2">
+                        <div>
+                            <p class="font-bold text-gray-800 mb-1 border-l-2 border-sage pl-3">【大眾運輸】</p>
+                            <p>捷運至<span class="no-wrap">「市政府站」</span>，1 號出口步行約 10 分鐘即可抵達。</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-800 mb-1 border-l-2 border-sage pl-3">【停車資訊】</p>
+                            <p>歌劇院地下設有付費停車場，或鄰近的<span class="no-wrap">「市政公園地下停車場」</span>。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP 表單串接 -->
+    <section id="rsvp" class="py-24 px-6 max-w-xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-sun font-english tracking-[0.4em] text-[10px] uppercase block mb-4">Response</span>
+            <h3 class="text-2xl font-serif tracking-widest">出席回函</h3>
+            <p class="text-gray-400 font-light mt-4 text-[13px]">請於 2026/10/22 前填寫，讓我們能為您做最好的安排</p>
+        </div>
+
+        <form id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSd4wSviEe9f6NSEwsJzhzwWK_4gyLsoOXqwd0GUb-cCX0bLFQ/formResponse" method="POST" target="hidden_iframe" onsubmit="return handleFormSubmit()">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <!-- Name (entry.1591657777) -->
+                <div>
+                    <label class="bilingual">賓客姓名 <span class="eng">Name</span></label>
+                    <input type="text" name="entry.1591657777" required class="form-input">
+                </div>
+                <!-- Phone (entry.918654433) -->
+                <div>
+                    <label class="bilingual">聯絡電話 <span class="eng">Phone</span></label>
+                    <input type="tel" name="entry.918654433" required class="form-input">
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <label class="bilingual">賓客關係 <span class="eng">Relationship</span></label>
+                <select name="entry.1293341810" required class="form-input">
+                    <option value="" disabled selected>請選擇關係</option>
+                    <option value="新郎好友">新郎好友</option>
+                    <option value="新娘好友">新娘好友</option>
+                    <option value="長輩親戚">長輩親戚</option>
+                    <option value="職場同事">職場同事</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <!-- Ceremony -->
+                <div>
+                    <label class="bilingual">證婚儀式 <span class="eng">Ceremony</span></label>
+                    <select name="entry.1343170873" required class="form-input">
+                        <option value="" disabled selected>出席意願</option>
+                        <option value="出席，我想見證這個時刻">出席，我想見證時刻</option>
+                        <option value="無法出席">無法出席</option>
+                    </select>
+                </div>
+                <!-- Luncheon -->
+                <div>
+                    <label class="bilingual">婚禮午宴 <span class="eng">Luncheon</span></label>
+                    <select name="entry.2041350499" required class="form-input">
+                        <option value="" disabled selected>出席意願</option>
+                        <option value="出席，絕對到場">出席，絕對到場</option>
+                        <option value="無法出席">無法出席</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <div>
+                    <label class="bilingual">成人人數 <span class="eng">Adults</span></label>
+                    <select name="entry.75077330" class="form-input">
+                        <option value="1">1 位</option>
+                        <option value="2">2 位</option>
+                        <option value="3">3 位</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="bilingual">兒童人數 <span class="eng">Children</span></label>
+                    <select name="entry.1448257203" class="form-input">
+                        <option value="0">0 位</option>
+                        <option value="1">1 位</option>
+                        <option value="2">2 位</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <label class="bilingual">喜帖領取形式 <span class="eng">Invitation</span></label>
+                <select name="entry.1441823726" required class="form-input">
+                    <option value="紙本和電子我都也要">紙本和電子我都要</option>
+                    <option value="僅需要電子喜帖">僅需要電子喜帖</option>
+                    <option value="僅需要紙本喜帖">僅需要紙本喜帖</option>
+                </select>
+            </div>
+
+            <!-- Address (entry.1038995156) -->
+            <div class="mb-10">
+                <label class="bilingual">郵寄地址 <span class="eng">Mailing Address</span></label>
+                <input type="text" name="entry.1038995156" class="form-input" placeholder="如需紙本請填寫">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <!-- Allergy (entry.144858941) -->
+                <div>
+                    <label class="bilingual">過敏原 <span class="eng">Allergies</span></label>
+                    <input type="text" name="entry.144858941" class="form-input" placeholder="海鮮、堅果等">
+                </div>
+                <div>
+                    <label class="bilingual">素食需求 <span class="eng">Vegetarian</span></label>
+                    <select name="entry.24144990" class="form-input">
+                        <option value="無">無</option>
+                        <option value="是">是 (全程素食)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Message (entry.71975212) -->
+            <div class="mb-16">
+                <label class="bilingual">祝福與備註 <span class="eng">Message</span></label>
+                <textarea name="entry.71975212" rows="2" class="form-input resize-none" placeholder="想對我們說的話"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-sun text-white py-5 rounded-full tracking-[0.5em] text-[11px] font-medium hover:bg-opacity-90 transition-all shadow-lg uppercase">Send Response</button>
+        </form>
+
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    </section>
+
+    <!-- 成功提示 -->
+    <div id="successModal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-500 bg-black/40 backdrop-blur-md px-6">
+        <div class="bg-white p-14 rounded-3xl text-center max-w-sm w-full shadow-2xl relative">
+            <div class="w-16 h-16 bg-sage/10 text-sage rounded-full flex items-center justify-center mx-auto mb-8">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h4 class="text-2xl font-serif mb-3 tracking-widest">回函已成功送出</h4>
+            <p class="text-gray-400 font-light text-sm mb-12">感謝您的祝福，我們在那一天不見不散。</p>
+            <button onclick="closeModal()" class="text-sun font-english tracking-widest text-[10px] border-b border-sun pb-1 uppercase font-semibold">Close</button>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="py-16 bg-white text-center text-gray-200 border-t border-gray-50">
+        <p class="font-english tracking-[0.5em] text-[10px] uppercase mb-3">Hao-yu & Joy Wedding</p>
+        <p class="text-[9px] font-light tracking-[0.2em]">© 2026 TWO WEIRDOS, ONE LIFETIME.</p>
+    </footer>
+
+    <script>
+        // 倒數計時器
+        const targetDate = new Date("2026-11-22T10:30:00").getTime();
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff <= 0) { clearInterval(timer); return; }
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+        }, 1000);
+
+        // 摺疊面板切換
+        function toggleAccordion() {
+            const acc = document.getElementById("traffic-accordion");
+            const icon = document.getElementById("acc-icon");
+            acc.classList.toggle("accordion-active");
+            icon.style.transform = acc.classList.contains("accordion-active") ? "rotate(180deg)" : "rotate(0deg)";
+        }
+
+        // 表單提交處理
+        function handleFormSubmit() {
+            const modal = document.getElementById("successModal");
+            modal.classList.remove("hidden");
+            setTimeout(() => modal.classList.add("opacity-100"), 50);
+            return true;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("successModal");
+            modal.classList.remove("opacity-100");
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                document.getElementById("rsvpForm").reset();
+            }, 500);
+        }
+    </script>
+</body>
+</html>
+
+```
